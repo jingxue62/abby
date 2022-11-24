@@ -21,6 +21,8 @@ const recomProducts = async () => {
         const response = await fetch('/products/recommend/4', {mode:'no-cors'});
         if (response.ok) {
           return response.json();
+          console.log("recommend products.");
+          console.log(response.json());
         } else {
           throw new Error('Data coud not be fetched!');
         }
