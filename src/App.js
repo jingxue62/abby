@@ -3,6 +3,7 @@ import './App.css';
 import Main from "./pages/Main";
 import About from "./pages/About";
 import Search from "./pages/Search";
+import AllProducts from './pages/AllProducts';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/about" element={<About />} />
           <Route path="/search/:content" element={<Search />} />
+          <Route path="/products" element={<AllProducts />} />
         </Routes>
       </div>
     </BrowserRouter>

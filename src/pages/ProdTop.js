@@ -46,7 +46,7 @@ export default function TopProducts() {
                       {item.discount < 1.0 &&
                         <span className="text-muted text-decoration-line-through">${item.price}</span>
                       }
-                      ${item.price * item.discount}
+                      ${(item.price * item.discount).toFixed(2)}
                   </div>
               </div>
 

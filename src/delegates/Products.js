@@ -47,4 +47,19 @@ const searchProducts = async (content) => {
     }
 }
 
-export { topProducts, recomProducts, searchProducts };
+// get all products
+const allProducts = async () => {
+  try {
+      const response = await fetch('/products/', {mode:'no-cors'});
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Data coud not be fetched!');
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error('Fatal Error encounted! Check console logs.');
+  }
+}
+
+export { topProducts, recomProducts, searchProducts, allProducts };

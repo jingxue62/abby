@@ -23,7 +23,7 @@ export default function SearchProducts() {
             return (
         <div className="col mb-5" id={idx}>
           <div className="card h-100">
-              <img className="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+              <img className="card-img-top-fluid" src={item.image} alt="product" />
               <div className="card-body p-4">
 
                   <div className="text-center">
@@ -31,7 +31,7 @@ export default function SearchProducts() {
                       {item.discount < 1.0 &&
                         <span className="text-muted text-decoration-line-through">${item.price}</span>
                       }
-                      ${item.price * item.discount}
+                      ${(item.price * item.discount).toFixed(2)}
                   </div>
               </div>
 

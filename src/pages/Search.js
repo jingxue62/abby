@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import SearchProducts from './ProdSearch';
 
 function Search() {
@@ -19,7 +19,7 @@ function Search() {
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container px-4 px-lg-5">
-          <a className="navbar-brand">E Kitchen</a>
+          <a className="navbar-brand"><h2>EKitchen</h2></a>
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
               <div className="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -28,7 +28,9 @@ function Search() {
                       <li className="nav-item dropdown">
                           <a className="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <li><a className="dropdown-item" href="#!">All Products</a></li>
+                              <li>
+                                <Link to="/products" className="dropdown-item">All Products</Link>
+                              </li>
                               <li><hr className="dropdown-divider" /></li>
                               <li><a className="dropdown-item" href="#!">My Order</a></li>
                               <li><a className="dropdown-item" href="#!">My Kitchen</a></li>
@@ -78,7 +80,7 @@ function Search() {
       </body>
 
       <footer className="py-5 bg-dark">
-          <div className="container"><p className="m-0 text-center text-white">Team Jing Xue, Jing Shu 2022</p></div>
+          <div className="container"><p className="m-0 text-center text-white"><h5>Team Jing Xue, Jing Shu 2022</h5></p></div>
       </footer>
   </div>
   );
