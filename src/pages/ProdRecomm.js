@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
 import { recomProducts } from '../delegates/Products'
 
 export default function RecomProducts() {
@@ -35,7 +36,7 @@ export default function RecomProducts() {
               </div>
 
               <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">View Details</a></div>
+                  <div className="text-center"><Link to={`/product/${item.id}`} className="btn btn-outline-dark mt-auto">View Details</Link></div>
               </div>
           </div>
       </div>

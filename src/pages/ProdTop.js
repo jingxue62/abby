@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from "react-router-dom"
 import { topProducts } from '../delegates/Products'
-// import { useSelector, useDispatch } from 'react-redux'
 
 export default function TopProducts() {
     const [topItems, initItems] = useState([]);
-    // const fetchData = async () => {
-    //   const response = await fetch('/products/top/4', {mode:'no-cors'})
-    //   if (!response.ok) {
-    //     console.log(response.json().data);
-    //     throw new Error('Data coud not be fetched!')
-    //   } else {
-    //     return response.json();
-    //   }
-    // }
 
 
     useEffect(() => {
@@ -37,11 +28,7 @@ export default function TopProducts() {
                   <div className="text-center">
                       <h5 className="fw-bolder">{item.name}</h5>
                       <div className="d-flex justify-content-center small text-warning mb-2">
-                          <i className="bi bi-star-fill"></i>
-                          <div className="star-fill"></div>
                           <div className="bi-star-fill"></div>
-                          <div className="bi-star-fill"></div>
-                          <span className="suit-heart-fill"></span>
                       </div>
                       {item.discount < 1.0 &&
                         <span className="text-muted text-decoration-line-through">${item.price}</span>
@@ -51,7 +38,7 @@ export default function TopProducts() {
               </div>
 
               <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">View Details</a></div>
+                  <div className="text-center"><Link to={`/product/${item.id}`} className="btn btn-outline-dark mt-auto">View Details</Link></div>
               </div>
           </div>
       </div>

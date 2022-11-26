@@ -1,4 +1,3 @@
-// import { API_TARGET } from "../apiTarget";
 
 // get top products
 const topProducts = async () => {
@@ -21,8 +20,6 @@ const recomProducts = async () => {
         const response = await fetch('/products/recommend/4', {mode:'no-cors'});
         if (response.ok) {
           return response.json();
-          console.log("recommend products.");
-          console.log(response.json());
         } else {
           throw new Error('Data coud not be fetched!');
         }
@@ -62,4 +59,19 @@ const allProducts = async () => {
   }
 }
 
-export { topProducts, recomProducts, searchProducts, allProducts };
+// get product
+const getProduct = async (productId) => {
+  try {
+      const response = await fetch('/product/' + productId, {mode:'no-cors'});
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Data coud not be fetched!');
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error('Fatal Error encounted! Check console logs.');
+  }
+}
+
+export { topProducts, recomProducts, searchProducts, allProducts, getProduct };
