@@ -48,9 +48,9 @@ const searchProducts = async (content) => {
 }
 
 // get all products
-const allProducts = async () => {
+const allProducts = async (num) => {
   try {
-      const response = await fetch('/products/', {mode:'no-cors'});
+      const response = await fetch('/products/'+ num, {mode:'no-cors'});
       if (response.ok) {
         return response.json();
       } else {
