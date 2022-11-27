@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { getProduct } from '../delegates/Products'
 
 export default function GetProduct() {
     const [getItem, initItem] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const { productId } = useParams();
 
 
@@ -13,10 +14,35 @@ export default function GetProduct() {
              initItem(res.data);
            })
            .catch((e) => {
-             console.log(e.message)
+             // console.log(e.message)
            })
        }, [])
 
+   let navigate = useNavigate();
+   const handlePlaceOrder = async () => {
+     setIsLoading(true);
+     try {
+         const config = {
+             method: 'POST',
+             headers: {
+                 Accept: 'application/json',
+                 'Content-Type': 'application/json',
+             },
+             body: JSON.stringify({product_id: productId, buyer_id: 1, quantity: 1, desc: 'Order just placed.'})
+         };
+         const response = await fetch('/orders/placeOrder', config, {mode:'no-cors'});
+         if (response.ok) {
+           // console.log(response.json());
+         } else {
+           throw new Error('Data coud not be fetched!');
+         }
+       } catch (error) {
+         console.log(error);
+         throw new Error('Fatal Error encounted! Check console logs.');
+     }
+     setIsLoading(false);
+     navigate('/orders/user/1');
+   };
     return (
         <div className="App">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -34,7 +60,9 @@ export default function GetProduct() {
                                     <Link to="/products" className="dropdown-item">All Products</Link>
                                   </li>
                                   <li><hr className="dropdown-divider" /></li>
-                                  <li><a className="dropdown-item" href="#!">My Order</a></li>
+                                  <li>
+                                      <Link to="/orders/user/1" className="dropdown-item">My Order</Link>
+                                  </li>
                                   <li><a className="dropdown-item" href="#!">My Kitchen</a></li>
                               </ul>
                           </li>
@@ -42,8 +70,8 @@ export default function GetProduct() {
                       <form className="d-flex">
                           <button className="btn btn-outline-dark" type="submit">
                               <i className="person-circle me-1"></i>
-                              User
-                              <span className="badge bg-dark text-white ms-1 rounded-pill">login</span>
+                              Jing Xue
+                              <span className="badge bg-dark text-white ms-1 rounded-pill">Logout</span>
                           </button>
                       </form>
                   </div>
@@ -51,7 +79,7 @@ export default function GetProduct() {
           </nav>
 
 
-          <body className="bg-dark py-2">
+          <body className="bg-dark py-5">
               <div className="row">
 
                         <div className="container-fluid">
@@ -60,7 +88,7 @@ export default function GetProduct() {
                                 <div className="col col-xs-2"><p className="fs-5 fw-light fw-italic text-left text-white">Created {getItem.created_at}</p></div>
                                 <div className="col col-xs-2"><p className="fs-5 fw-light fw-italic text-left text-white">Last Updated {getItem.updated_at}</p></div>
                                 <div className="col col-xs-2"><p className="fs-5 fw-light fw-italic text-left text-white">Price {getItem.price}</p></div>
-                                <div className="col col-xs-4"><button type="button" className="btn btn-outline-light" onClick='#'>Place Order</button></div>
+                                <div className="col col-xs-4"><button type="button" className="btn btn-outline-light" onClick={handlePlaceOrder}>Place Order</button></div>
                             </div>
                             <div className="row">
                                 <div className="col"></div>

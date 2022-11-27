@@ -7,7 +7,7 @@ export default function AllProducts() {
     const [allItems, setItems] = useState([]);
     const [orderValue, setOrder] = useState('desc');
     const [sortValue, setSort] = useState('date');
-    
+
     useEffect(() => {
          allProducts()
            .then((res) => {
@@ -30,10 +30,10 @@ export default function AllProducts() {
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log("sorting...");     
+        console.log("sorting...");
         console.log("sort by:", sortValue);
         console.log("order:", orderValue);
-        
+
         var sortedData = allItems.sort((a,b) => {
             var fa = a.updated_at;
             var fb = b.updated_at;
@@ -60,7 +60,7 @@ export default function AllProducts() {
         console.log(sortedData);
         setItems(sortedData);
     };
-    
+
     return (
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -88,8 +88,8 @@ export default function AllProducts() {
                   <form className="d-flex">
                       <button className="btn btn-outline-dark" type="submit">
                           <i className="person-circle me-1"></i>
-                          User
-                          <span className="badge bg-dark text-white ms-1 rounded-pill">login</span>
+                          Jing Xue
+                          <span className="badge bg-dark text-white ms-1 rounded-pill">Logout</span>
                       </button>
                   </form>
               </div>
@@ -118,14 +118,14 @@ export default function AllProducts() {
                                         <option value="desc">Descending</option>
                                         <option value="asc">Ascending</option>
                                     </select>
-                                </div>                   
+                                </div>
                             </th>
                             <th>
                                 <div className="container-md px-5 px-lg-5 my-3">
                                     <button onClick={handleClick} className="btn btn-outline-light" >
                                         sort
                                     </button>
-                                </div>                   
+                                </div>
                             </th>
                         </tr>
                     </thead>
