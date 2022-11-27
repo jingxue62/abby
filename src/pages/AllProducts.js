@@ -5,61 +5,18 @@ import { allProducts } from '../delegates/Products';
 export default function AllProducts() {
 
     const [allItems, setItems] = useState([]);
-    const [orderValue, setOrder] = useState('desc');
-    const [sortValue, setSort] = useState('date');
+    const [sortValue, setSort] = useState(1);
     
     useEffect(() => {
-         allProducts()
+         allProducts(sortValue)
            .then((res) => {
-             let items = res.data;
-             // sorted by updated time in descending order by default
-             console.log("initial data: ", res.data);
-             let sortedItems = items.sort((a,b) => {
-                let fa = a.updated_at;
-                let fb = b.updated_at;
-                return (fa<fb? 1:((fa>fb)? -1:0));
-                // return (fa>fb? 1:((fa<fb)? -1:0)); // ascending order
-             })
-             setItems(sortedItems);
-             console.log("initial sorted data: ", sortedItems);
+             console.log("all products: ", res.data);
+             setItems(res.data);
            })
            .catch((e) => {
              console.log(e.message);
            })
-       }, [])
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        console.log("sorting...");     
-        console.log("sort by:", sortValue);
-        console.log("order:", orderValue);
-        
-        var sortedData = allItems.sort((a,b) => {
-            var fa = a.updated_at;
-            var fb = b.updated_at;
-            if (sortValue==="price") {
-                fa = a.price * a.discount;
-                fb = b.price * b.discount;
-            } else if (sortValue==="owner") {
-                fa = a.owner_id;
-                fb = b.owner_id;
-            } else {
-                fa = a.updated_at;
-                fb = b.updated_at;
-            }
-
-            if(orderValue==="asc"){
-                console.log("orderVal===asc");
-                return (fa>fb? 1:((fa<fb)? -1:0));
-            }
-            else{
-                return (fa<fb? 1:((fa>fb)? -1:0));
-            }
-        });
-        console.log("sorted...");
-        console.log(sortedData);
-        setItems(sortedData);
-    };
+       }, [sortValue])
     
     return (
       <div className="App">
@@ -103,29 +60,18 @@ export default function AllProducts() {
                 <table>
                     <thead>
                         <tr>
+                            <th className='text-white'>
+                                <h4> <strong>Sort</strong></h4>
+                            </th>
                             <th>
                                 <div className="container-md px-5 px-lg-5 my-3">
-                                    <select onChange={(e)=>{setSort(e.target.value);console.log("sort by:", e.target.value);}} className="form-select" aria-label="sort">
-                                        <option value="updated_at">Updated Date</option>
-                                        <option value="owner">Owner</option>
-                                        <option value="price">Price</option>
+                                    <select onChange={(e)=>{setSort(Number(e.target.value))}} 
+                                        className="form-select" aria-label="sort">
+                                        <option value="1">Updated Date</option>
+                                        <option value="2">Price From Low to High</option>
+                                        <option value="3">Price From High to Low</option>
                                     </select>
                                 </div>
-                            </th>
-                            <th>
-                                <div className="container-md px-5 px-lg-5 my-3">
-                                    <select onChange={(e)=>{setOrder(e.target.value);console.log("order:", e.target.value);}} className="form-select" aria-label="order">
-                                        <option value="desc">Descending</option>
-                                        <option value="asc">Ascending</option>
-                                    </select>
-                                </div>                   
-                            </th>
-                            <th>
-                                <div className="container-md px-5 px-lg-5 my-3">
-                                    <button onClick={handleClick} className="btn btn-outline-light" >
-                                        sort
-                                    </button>
-                                </div>                   
                             </th>
                         </tr>
                     </thead>
@@ -139,7 +85,7 @@ export default function AllProducts() {
                     return (
                 <div className="col mb-5" id={idx}>
                     <div className="card h-100">
-                        <div className="badge bg-dark text-white position-absolute">XX</div>
+                        <div className="badge bg-dark text-white position-absolute" id={idx}>{item.username}</div>
                         <img className="card-img-top-fluid" id={idx} src={item.image} alt="product" />
                         <div className="card-body p-4" id={idx}>
 
