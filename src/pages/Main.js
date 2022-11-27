@@ -19,7 +19,6 @@ function Main() {
     navigate(path);
   };
 
-
   return (
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -37,7 +36,9 @@ function Main() {
                                 <Link to="/products" className="dropdown-item">All Products</Link>
                               </li>
                               <li><hr className="dropdown-divider" /></li>
-                              <li><a className="dropdown-item" href="#!">My Order</a></li>
+                              <li>
+                                  <Link to="/orders/user/1" className="dropdown-item">My Order</Link>
+                              </li>
                               <li><a className="dropdown-item" href="#!">My Kitchen</a></li>
                           </ul>
                       </li>
@@ -45,8 +46,8 @@ function Main() {
                   <form className="d-flex">
                       <button className="btn btn-outline-dark" type="submit">
                           <i className="person-circle me-1"></i>
-                          User
-                          <span className="badge bg-dark text-white ms-1 rounded-pill">login</span>
+                          Jing Xue
+                          <span className="badge bg-dark text-white ms-1 rounded-pill">Logout</span>
                       </button>
                   </form>
               </div>

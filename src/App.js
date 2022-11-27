@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Search from "./pages/Search";
 import AllProducts from './pages/AllProducts';
 import Product from './pages/ProdDetails';
+import Order from './pages/Orders';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/search/:content" element={<Search />} />
           <Route path="/products" element={<AllProducts />} />
           <Route path="/product/:productId" element={<Product />} />
+          <Route path="/orders/user/:userId" element={<Order />} />
         </Routes>
       </div>
     </BrowserRouter>

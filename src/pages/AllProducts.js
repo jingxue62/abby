@@ -6,7 +6,7 @@ export default function AllProducts() {
 
     const [allItems, setItems] = useState([]);
     const [sortValue, setSort] = useState(1);
-    
+
     useEffect(() => {
          allProducts(sortValue)
            .then((res) => {
@@ -45,8 +45,8 @@ export default function AllProducts() {
                   <form className="d-flex">
                       <button className="btn btn-outline-dark" type="submit">
                           <i className="person-circle me-1"></i>
-                          User
-                          <span className="badge bg-dark text-white ms-1 rounded-pill">login</span>
+                          Jing Xue
+                          <span className="badge bg-dark text-white ms-1 rounded-pill">Logout</span>
                       </button>
                   </form>
               </div>
