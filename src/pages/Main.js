@@ -12,10 +12,10 @@ function Main() {
   };
 
   let navigate = useNavigate();
-  
+
   const handleClick = event => {
     event.preventDefault();
-    let path = "/search/" + sp;
+    let path = "/search/" + sp.replace(" ", ";");
     navigate(path);
   };
 
