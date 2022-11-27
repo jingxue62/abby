@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { searchProducts } from '../delegates/Products'
 
 export default function SearchProducts() {
@@ -36,7 +36,7 @@ export default function SearchProducts() {
               </div>
 
               <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">View Details</a></div>
+                  <div className="text-center"><Link to={`/product/${item.id}`} className="btn btn-outline-dark mt-auto">View Details</Link></div>
               </div>
           </div>
       </div>
