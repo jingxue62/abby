@@ -1,7 +1,7 @@
 
 # Installation
 
-Install Node.js [here](https://nodejs.org/en/download/)
+Install Node.js [here](https://nodejs.org/en/download/)  (For the nodejs installation on Amazon Linux 2, see: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html)
 
 `npx create-react-app abby`
 
