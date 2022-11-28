@@ -9,6 +9,9 @@ Install latest Bootstrap
 
 `npm install bootstrap`
 
+Install react-icons
+
+`npm install react-icons --save`
 
 # Getting Started with Create React App
 
