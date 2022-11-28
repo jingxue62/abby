@@ -37,7 +37,9 @@ export default function AllProducts() {
                                 <Link to="/products" className="dropdown-item active">All Products</Link>
                               </li>
                               <li><hr className="dropdown-divider" /></li>
-                              <li><a className="dropdown-item" href="#!">My Order</a></li>
+                              <li>
+                                <Link to="/orders/user/1" className="dropdown-item">My Order</Link>
+                              </li>
                               <li><a className="dropdown-item" href="#!">My Kitchen</a></li>
                           </ul>
                       </li>
@@ -99,7 +101,7 @@ export default function AllProducts() {
                         </div>
 
                         <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">View Details</a></div>
+                            <div className="text-center"><Link to={`/product/${item.id}`} className="btn btn-outline-dark mt-auto">View Details</Link></div>
                         </div>
                     </div>
                 </div>

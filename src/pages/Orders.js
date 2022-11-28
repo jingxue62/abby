@@ -64,7 +64,7 @@ export default function GetOrders() {
                                   </li>
                                   <li><hr className="dropdown-divider" /></li>
                                   <li>
-                                      <Link to="/orders/user/1" className="dropdown-item">My Order</Link>
+                                      <Link to="/orders/user/1" className="dropdown-item active">My Order</Link>
                                   </li>
                                   <li><a className="dropdown-item" href="#!">My Kitchen</a></li>
                               </ul>
@@ -94,7 +94,7 @@ export default function GetOrders() {
                   </div>
               </div>
               <table class="table table-dark">
-                  <thead>
+                  <thead className="fs-5 fw-bold">
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Item</th>
@@ -116,7 +116,7 @@ export default function GetOrders() {
                         <td>{item.username}</td>
                         <td>{item.created_at}</td>
                         <td>
-                            <button type="button" className="btn btn-outline-light" onClick='#'>Chat</button>
+                            <button type="button" className="btn btn-outline-light" onClick='#'>Comments</button>
                             <button type="button" className="btn btn-outline-light" onClick={() => handleCancelOrder(item.id)}>Cancel</button>
                         </td>
                       </tr>

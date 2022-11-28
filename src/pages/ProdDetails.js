@@ -77,85 +77,100 @@ export default function GetProduct() {
                   </div>
               </div>
           </nav>
-
-
+          <header className="bg-dark py-1">
+            <div className="container-md px-5 px-lg-5 my-3">
+              <table className="table table-striped table-dark text-white">
+                <thead>
+                    <th> <h5><strong>Owner</strong></h5> </th>
+                    <th> <h5><strong>Created Date</strong></h5> </th>
+                    <th> <h5><strong>Last Updated Date</strong></h5> </th>
+                    <th> <h5><strong>Price</strong></h5> </th>
+                    <th> <h5><strong>Count</strong></h5> </th>
+                    <th>
+                      <div className="col col-xs-4">
+                        <button type="button" className="btn btn-outline-light" onClick={handlePlaceOrder}>
+                          <strong>Add to Cart</strong>
+                        </button>
+                      </div>
+                    </th>
+                </thead>
+                <tbody>
+                    <th> {getItem.username} </th>
+                    <th> {getItem.created_at} </th>
+                    <th> {getItem.updated_at} </th>
+                    <th> {getItem.discount < 1.0 &&
+                        <span className="text-muted text-decoration-line-through">${getItem.price}</span>
+                      }
+                      ${(getItem.price * getItem.discount).toFixed(2)}
+                    </th>
+                    <th> {getItem.availability}</th>
+                    <th></th>
+                </tbody>
+              </table>
+            </div> 
+          </header>
           <body className="bg-dark py-5">
               <div className="row">
-
-                        <div className="container-fluid">
-                            <div className="row">
-                                <div className="col col-xs-2"><p className="fs-5 fw-light fw-italic text-left text-white">Owner {getItem.username}</p></div>
-                                <div className="col col-xs-2"><p className="fs-5 fw-light fw-italic text-left text-white">Created {getItem.created_at}</p></div>
-                                <div className="col col-xs-2"><p className="fs-5 fw-light fw-italic text-left text-white">Last Updated {getItem.updated_at}</p></div>
-                                <div className="col col-xs-2"><p className="fs-5 fw-light fw-italic text-left text-white">Price {getItem.price}</p></div>
-                                <div className="col col-xs-4"><button type="button" className="btn btn-outline-light" onClick={handlePlaceOrder}>Place Order</button></div>
-                            </div>
-                            <div className="row">
-                                <div className="col"></div>
-                                <div className="col"></div>
-                                <div className="col"></div>
-                                <div className="col"></div>
-                                <div className="col"></div>
-                            </div>
-                            <div
-                              id="carouselBasicExample"
-                              className="row carousel slide carousel-fade"
-                              data-mdb-ride="carousel"
-                            >
-
-                              <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                  <img
-                                    src={getItem.image}
-                                    class=""
-                                    alt="image"
-                                  />
-                                  <div class="carousel-caption d-none d-md-block">
-                                    <h5>Images</h5>
-                                    <p>
-                                      Browse
-                                    </p>
-                                  </div>
-                                </div>
-
-                              </div>
-
-                              <button
-                                class="carousel-control-prev"
-                                type="button"
-                                data-mdb-target="#carouselBasicExample"
-                                data-mdb-slide="prev"
-                              >
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                              </button>
-                              <button
-                                class="carousel-control-next"
-                                type="button"
-                                data-mdb-target="#carouselBasicExample"
-                                data-mdb-slide="next"
-                              >
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                              </button>
-                            </div>
-                            <div className="row">
-                                <div className="col"><p className="fs-4 fw-bold text-left text-white">Description</p></div>
-                                <div className="col"></div>
-                                <div className="col"></div>
-                            </div>
-                            <div className="row">
-                                <div className="col-12 col-md-8">
-                                  <p className="fs-5 text-left text-white">{getItem.description}</p>
-                                </div>
-                                <div className="col-12 col-md-4"></div>
-                            </div>
-                            <section className="py-1">
-                                  <div className="container px-4 px-lg-5 mt-5">
-                                  </div>
-                            </section>
+                <div className="container-fluid">
+                    <div
+                      id="carouselBasicExample"
+                      className="row carousel slide carousel-fade"
+                      data-mdb-ride="carousel"
+                    >
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img
+                            src={getItem.image}
+                            class=""
+                            alt="image"
+                          />
+                          {/* <div class="carousel-caption d-none d-md-block">
+                            <h5>Images</h5>
+                            <p>
+                              Browse
+                            </p>
+                          </div> */}
                         </div>
+                      </div>
 
+                      <button
+                        class="carousel-control-prev"
+                        type="button"
+                        data-mdb-target="#carouselBasicExample"
+                        data-mdb-slide="prev"
+                      >
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button
+                        class="carousel-control-next"
+                        type="button"
+                        data-mdb-target="#carouselBasicExample"
+                        data-mdb-slide="next"
+                      >
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+
+                    <div className="row">
+                        <div className="col"><p className="fs-4 fw-bold text-left text-white">Description</p></div>
+                        <div className="col"></div>
+                        <div className="col"></div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12 col-md-5">
+                          <p className="fs-5 text-left text-white">{getItem.description}</p>
+                        </div>
+                        <div className="col-12 col-md-4"></div>
+                    </div>
+
+                    <section className="py-1">
+                          <div className="container px-4 px-lg-5 mt-5">
+                          </div>
+                    </section>
+                </div>
               </div>
           </body>
 
