@@ -1,7 +1,9 @@
 
 # Installation
 
-Install Node.js [here](https://nodejs.org/en/download/)  (For the nodejs installation on Amazon Linux 2, see: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html)
+Install Node.js [here](https://nodejs.org/en/download/)  
+(For the nodejs installation on Amazon Linux 2, see: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html)
+For the "GLIBC_2.27 not found" error, please run `nvm install 16.15.1`
 
 `npx create-react-app abby`
 
