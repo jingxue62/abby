@@ -100,6 +100,8 @@ export default function GetOrders() {
                         <th scope="col">Item</th>
                         <th scope="col">Progress</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Total</th>
                         <th scope="col">Owner</th>
                         <th scope="col">Placed At</th>
                         <th scope="col">Actions</th>
@@ -112,7 +114,9 @@ export default function GetOrders() {
                         <th scope="row">{idx+1}</th>
                         <td>{item.name}</td>
                         <td>In progress{item.status}</td>
-                        <td>${item.price}</td>
+                        <td>${(item.price * item.discount).toFixed(2)}</td>
+                        <td>{item.quantity}</td>
+                        <td>${(item.price * item.discount * item.quantity).toFixed(2)}</td>
                         <td>{item.username}</td>
                         <td>{item.created_at}</td>
                         <td>

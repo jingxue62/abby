@@ -4,6 +4,7 @@ import { getProduct } from '../delegates/Products'
 
 export default function GetProduct() {
     const [getItem, initItem] = useState([]);
+    const [qty, setQty] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const { productId } = useParams();
 
@@ -28,7 +29,7 @@ export default function GetProduct() {
                  Accept: 'application/json',
                  'Content-Type': 'application/json',
              },
-             body: JSON.stringify({product_id: productId, buyer_id: 1, quantity: 1, desc: 'Order just placed.'})
+             body: JSON.stringify({product_id: productId, buyer_id: 1, quantity: qty, desc: 'Order just placed.'})
          };
          const response = await fetch('/orders/placeOrder', config, {mode:'no-cors'});
          if (response.ok) {
@@ -80,15 +81,21 @@ export default function GetProduct() {
           <header className="bg-dark py-1">
             <div className="container-md px-5 px-lg-5 my-3">
               <table className="table table-striped table-dark text-white">
-                <thead>
+              <thead>
                     <th> <h5><strong>Owner</strong></h5> </th>
                     <th> <h5><strong>Created Date</strong></h5> </th>
                     <th> <h5><strong>Last Updated Date</strong></h5> </th>
                     <th> <h5><strong>Price</strong></h5> </th>
-                    <th> <h5><strong>Count</strong></h5> </th>
+                    <th> </th>
                     <th>
                       <div className="col col-xs-4">
-                        <button type="button" className="btn btn-outline-light" onClick={handlePlaceOrder}>
+                        <strong>Qty:</strong>
+                        <select value={qty} onChange={(e) => {setQty(e.target.value)}} >
+                          {[...Array(getItem.availability).keys()].map(x => 
+                                      <option key={x+1} value={x+1}> { x+1 } </option>
+                          )}
+                        </select>
+                        <button type="button" className="btn btn-outline-light m-2" onClick={handlePlaceOrder}>
                           <strong>Add to Cart</strong>
                         </button>
                       </div>
@@ -103,7 +110,7 @@ export default function GetProduct() {
                       }
                       ${(getItem.price * getItem.discount).toFixed(2)}
                     </th>
-                    <th> {getItem.availability}</th>
+                    <th></th>
                     <th></th>
                 </tbody>
               </table>
