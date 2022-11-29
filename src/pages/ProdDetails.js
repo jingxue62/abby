@@ -1,48 +1,65 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import { getProduct } from '../delegates/Products'
 
-export default function GetProduct() {
-    const [getItem, initItem] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+export default function Product(props) {
+    // useState hook, set the quantity from the user
+    const [ qty, setQty ] = useState(1);
+
+    // useSelector hook, fetch productDetails from backend
+    const productDetails = useSelector(state => state.productDetails);
+    const { product, loading, error } = productDetails;
+    const dispatch = useDispatch();
+    
+    // const [product, initItem] = useState([]);
+    // const [isLoading, setIsLoading] = useState(false);
     const { productId } = useParams();
-
-
     useEffect(() => {
-         getProduct(productId)
-           .then((res) => {
-             initItem(res.data);
-           })
-           .catch((e) => {
-             // console.log(e.message)
-           })
-       }, [])
+      dispatch(getProduct(productId));
+      console.log("Product page:", product)
+    },[])
 
-   let navigate = useNavigate();
-   const handlePlaceOrder = async () => {
-     setIsLoading(true);
-     try {
-         const config = {
-             method: 'POST',
-             headers: {
-                 Accept: 'application/json',
-                 'Content-Type': 'application/json',
-             },
-             body: JSON.stringify({product_id: productId, buyer_id: 1, quantity: 1, desc: 'Order just placed.'})
-         };
-         const response = await fetch('/orders/placeOrder', config, {mode:'no-cors'});
-         if (response.ok) {
-           // console.log(response.json());
-         } else {
-           throw new Error('Data coud not be fetched!');
-         }
-       } catch (error) {
-         console.log(error);
-         throw new Error('Fatal Error encounted! Check console logs.');
-     }
-     setIsLoading(false);
-     navigate('/orders/user/1');
-   };
+  //   useEffect(() => {
+  //        getProduct(productId)
+  //          .then((res) => {
+  //            initItem(res.data);
+  //          })
+  //          .catch((e) => {
+  //            // console.log(e.message)
+  //          })
+  //      }, [productId])
+
+  //  let navigate = useNavigate();
+
+   const addToCartHandler = () => {
+      props.history.push("/cart/" + productId + "?qty=" + qty);
+   }
+
+  //  const handlePlaceOrder = async () => {
+  //    setIsLoading(true);
+  //    try {
+  //        const config = {
+  //            method: 'POST',
+  //            headers: {
+  //                Accept: 'application/json',
+  //                'Content-Type': 'application/json',
+  //            },
+  //            body: JSON.stringify({product_id: productId, buyer_id: 1, quantity: 1, desc: 'Order just placed.'})
+  //        };
+  //        const response = await fetch('/orders/placeOrder', config, {mode:'no-cors'});
+  //        if (response.ok) {
+  //          // console.log(response.json());
+  //        } else {
+  //          throw new Error('Data coud not be fetched!');
+  //        }
+  //      } catch (error) {
+  //        console.log(error);
+  //        throw new Error('Fatal Error encounted! Check console logs.');
+  //    }
+  //    setIsLoading(false);
+  //    navigate('/orders/user/1');
+  //  };
     return (
         <div className="App">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -85,25 +102,31 @@ export default function GetProduct() {
                     <th> <h5><strong>Created Date</strong></h5> </th>
                     <th> <h5><strong>Last Updated Date</strong></h5> </th>
                     <th> <h5><strong>Price</strong></h5> </th>
-                    <th> <h5><strong>Count</strong></h5> </th>
+                    <th> </th>
                     <th>
                       <div className="col col-xs-4">
-                        <button type="button" className="btn btn-outline-light" onClick={handlePlaceOrder}>
+                        <strong>Qty:</strong>
+                        <select value={qty} onChange={(e) => {setQty(e.target.value)}} >
+                          {[...Array(product.availability).keys()].map(x => 
+                                      <option key={x+1} value={x+1}> { x+1 } </option>
+                          )}
+                        </select>
+                        <button type="button" className="btn btn-outline-light m-2" onClick={addToCartHandler}>
                           <strong>Add to Cart</strong>
                         </button>
                       </div>
                     </th>
                 </thead>
                 <tbody>
-                    <th> {getItem.username} </th>
-                    <th> {getItem.created_at} </th>
-                    <th> {getItem.updated_at} </th>
-                    <th> {getItem.discount < 1.0 &&
-                        <span className="text-muted text-decoration-line-through">${getItem.price}</span>
+                    <th> {product.username} </th>
+                    <th> {product.created_at} </th>
+                    <th> {product.updated_at} </th>
+                    <th> {product.discount < 1.0 &&
+                        <span className="text-muted text-decoration-line-through">${product.price}</span>
                       }
-                      ${(getItem.price * getItem.discount).toFixed(2)}
+                      ${(product.price * product.discount).toFixed(2)}
                     </th>
-                    <th> {getItem.availability}</th>
+                    <th></th>
                     <th></th>
                 </tbody>
               </table>
@@ -120,7 +143,7 @@ export default function GetProduct() {
                       <div class="carousel-inner">
                         <div class="carousel-item active">
                           <img
-                            src={getItem.image}
+                            src={product.image}
                             class=""
                             alt="image"
                           />
@@ -161,7 +184,7 @@ export default function GetProduct() {
 
                     <div className="row">
                         <div className="col-12 col-md-5">
-                          <p className="fs-5 text-left text-white">{getItem.description}</p>
+                          <p className="fs-5 text-left text-white">{product.description}</p>
                         </div>
                         <div className="col-12 col-md-4"></div>
                     </div>

@@ -8,10 +8,30 @@ export default function AllProducts() {
     const [sortValue, setSort] = useState(1);
 
     useEffect(() => {
-         allProducts(sortValue)
+         allProducts()
            .then((res) => {
-             console.log("all products: ", res.data);
-             setItems(res.data);
+                var items = res.data;
+                var sortedData = items.sort((a,b) => {
+                    var fa = a.updated_at;
+                    var fb = b.updated_at;
+                    if (sortValue===1) {
+                        fa = a.updated_at;
+                        fb = b.updated_at;
+                    } else {
+                        fa = a.realPrice;
+                        fb = b.realPrice;
+                    }
+
+                    if(sortValue===2){
+                        // sort in ascending order
+                        return (fa>fb? 1:((fa<fb)? -1:0));
+                    } else{
+                        // sort in descending order
+                        return (fa<fb? 1:((fa>fb)? -1:0));
+                    }
+                })
+                setItems(sortedData);
+                console.log(sortedData);
            })
            .catch((e) => {
              console.log(e.message);
@@ -90,7 +110,6 @@ export default function AllProducts() {
                         <div className="badge bg-dark text-white position-absolute" id={idx}>{item.username}</div>
                         <img className="card-img-top-fluid" id={idx} src={item.image} alt="product" />
                         <div className="card-body p-4" id={idx}>
-
                             <div className="text-center" id={idx}>
                                 <h5 className="fw-bolder">{item.name}</h5>
                                 {item.discount < 1.0 &&

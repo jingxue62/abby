@@ -6,7 +6,8 @@ import Search from "./pages/Search";
 import AllProducts from './pages/AllProducts';
 import Product from './pages/ProdDetails';
 import Order from './pages/Orders';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Cart from './pages/Cart';
+import { BrowserRouter, Routes, Route, useHistory } from "react-router-dom";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/products" element={<AllProducts />} />
           <Route path="/product/:productId" element={<Product />} />
           <Route path="/orders/user/:userId" element={<Order />} />
+          <Route path="/cart/:id?" component={<Cart />} />
         </Routes>
       </div>
     </BrowserRouter>
