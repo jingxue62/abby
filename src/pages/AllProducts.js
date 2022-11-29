@@ -8,15 +8,35 @@ export default function AllProducts() {
     const [sortValue, setSort] = useState(1);
 
     useEffect(() => {
-         allProducts(sortValue)
-           .then((res) => {
-             console.log("all products: ", res.data);
-             setItems(res.data);
-           })
-           .catch((e) => {
-             console.log(e.message);
-           })
-       }, [sortValue])
+        allProducts()
+          .then((res) => {
+               var items = res.data;
+               var sortedData = items.sort((a,b) => {
+                   var fa = a.updated_at;
+                   var fb = b.updated_at;
+                   if (sortValue===1) {
+                       fa = a.updated_at;
+                       fb = b.updated_at;
+                   } else {
+                       fa = a.realPrice;
+                       fb = b.realPrice;
+                   }
+
+                   if(sortValue===2){
+                       // sort in ascending order
+                       return (fa>fb? 1:((fa<fb)? -1:0));
+                   } else{
+                       // sort in descending order
+                       return (fa<fb? 1:((fa>fb)? -1:0));
+                   }
+               })
+               setItems(sortedData);
+               console.log(sortedData);
+          })
+          .catch((e) => {
+            console.log(e.message);
+          })
+      }, [sortValue])
     
     return (
       <div className="App">
