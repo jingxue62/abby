@@ -65,13 +65,9 @@ const allProducts = async () => {
 const getProduct = (productId) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
-    // const response = await fetch('/product/' + productId, {mode:'no-cors'});
     const res = await axios.get('/product/' + productId);
-    console.log(res.status)
     if (res.status === 200){
-      console.log(res.data);
-      console.log(typeof(res.data));
-      dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: res.data });
+      dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: res.data.data });
     }          
     else 
       dispatch({ type: PRODUCT_DETAILS_FAIL, payload: "Product Not Found!" });
@@ -79,18 +75,6 @@ const getProduct = (productId) => async (dispatch) => {
     console.log(error);
     dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.message });
   }
-
-  // try {
-  //     const response = await fetch('/product/' + productId, {mode:'no-cors'});
-  //     if (response.ok) {
-  //       return response.json();
-  //     } else {
-  //       throw new Error('Data coud not be fetched!');
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw new Error('Fatal Error encounted! Check console logs.');
-  // }
 }
 
 export { topProducts, recomProducts, searchProducts, allProducts, getProduct };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
-import { recomProducts } from '../delegates/Products'
+import { recomProducts } from '../actions/Products'
 
 export default function RecomProducts() {
     const [recomItems, initItems] = useState([]);
@@ -23,11 +23,11 @@ export default function RecomProducts() {
         <div className="col mb-5" id={idx}>
           <div className="card h-100">
               <div className="badge bg-dark text-white position-absolute">Hot Sale</div>
-              <img className="card-img-top-fluid" src={item.image} alt="product" />
+              <img className="card-img-top-fluid" id={idx} src={item.image} alt="product" />
               <div className="card-body p-4">
 
-                  <div className="text-center">
-                      <h5 className="fw-bolder">{item.name}</h5>
+                  <div className="text-center" id={idx}>
+                      <h5 className="fw-bolder" id={idx}>{item.name}</h5>
                       {item.discount < 1.0 &&
                         <span className="text-muted text-decoration-line-through">${item.price}</span>
                       }
@@ -35,7 +35,7 @@ export default function RecomProducts() {
                   </div>
               </div>
 
-              <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div className="card-footer p-4 pt-0 border-top-0 bg-transparent" id={idx}>
                   <div className="text-center"><Link to={`/product/${item.id}`} className="btn btn-outline-dark mt-auto">View Details</Link></div>
               </div>
           </div>

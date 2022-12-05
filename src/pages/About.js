@@ -8,7 +8,7 @@ import { MdViewColumn } from "react-icons/md";
 function About() {
   return (
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container px-4 px-lg-5">
           <a className="navbar-brand"><h2>EKitchen</h2></a>
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
@@ -41,7 +41,7 @@ function About() {
                   </form>
               </div>
           </div>
-      </nav>
+      </nav> */}
 
       <header className="py-1">
           <div className="container px-4 px-lg-5 my-5">
@@ -144,9 +144,9 @@ function About() {
 
       </body>
 
-      <footer className="py-5 bg-dark">
-          <div className="container"><p className="m-0 text-center text-white">Team Jing Xue, Jing Shu 2022</p></div>
-      </footer>
+      {/* <footer className="py-5 bg-dark">
+          <div className="container"><h5 className="m-0 text-center text-white"><strong>Team Jing Xue, Jing Shu 2022</strong></h5></div>
+      </footer> */}
   </div>
   );
 }

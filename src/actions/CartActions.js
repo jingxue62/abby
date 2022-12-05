@@ -1,16 +1,18 @@
 import Cookie from 'js-cookie';
+import axios from 'axios';
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants';
 
 const addToCart = (productId,qty) => async(dispatch, getState) => {
-        console.log('add to cart...')
         try {
-            const response = await fetch('/product/' + productId, {mode:'no-cors'});
-            if (response.ok) {
-                var data = response.data;
+            // const response = await fetch('/product/' + productId, {mode:'no-cors'});
+            const res = await axios.get('/product/' + productId);
+
+            if (res.status === 200) {
+                var data = res.data.data;
                 dispatch({
                     type: CART_ADD_ITEM, 
                     payload: {
-                        product: data.id,
+                        productId: data.id,
                         name: data.name,
                         image: data.image,
                         price: data.price,
@@ -22,12 +24,9 @@ const addToCart = (productId,qty) => async(dispatch, getState) => {
                 });
                 const { cart: { cartItems }} = getState();
                 Cookie.set("cartItems", JSON.stringify(cartItems));
-            } else {
-              throw new Error('Data coud not be fetched!');
-            }
+            } 
           } catch (error) {
-            console.log(error);
-            throw new Error('Fatal Error encounted! Check console logs.');
+            console.log("cartActions, error: ",error);
         }
 }
 

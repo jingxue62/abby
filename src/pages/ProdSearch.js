@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link } from "react-router-dom";
-import { searchProducts } from '../delegates/Products'
+import { searchProducts } from '../actions/Products'
 
 export default function SearchProducts() {
     const [searchItems, initItems] = useState([]);
@@ -21,7 +21,7 @@ export default function SearchProducts() {
       <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       {searchItems.map( (item,idx) => {
             return (
-        <div className="col mb-5" id={idx}>
+        <div className="col mb-5" key={idx}>
           <div className="card h-100">
               <img className="card-img-top-fluid" src={item.image} alt="product" />
               <div className="card-body p-4">

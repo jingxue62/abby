@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
-import { topProducts } from '../delegates/Products'
+import { topProducts } from '../actions/Products'
 
 export default function TopProducts() {
     const [topItems, initItems] = useState([]);
@@ -22,14 +22,14 @@ export default function TopProducts() {
             return (
         <div className="col mb-5" id={idx}>
           <div className="card h-100">
-              <img className="card-img-top" src={item.image}/>
+              <img className="card-img-top" src={item.image} id={idx}/>
               <div className="card-body p-4">
 
-                  <div className="text-center">
-                      <h5 className="fw-bolder">{item.name}</h5>
+                  <div className="text-center" id={idx}>
+                      <h5 className="fw-bolder" id={idx}>{item.name}</h5>
                       <div className="d-flex justify-content-center small text-warning mb-2">
                           <div className="bi-star-fill"></div>
-                      </div>
+                      </div >
                       {item.discount < 1.0 &&
                         <span className="text-muted text-decoration-line-through">${item.price}</span>
                       }
@@ -37,7 +37,7 @@ export default function TopProducts() {
                   </div>
               </div>
 
-              <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div className="card-footer p-4 pt-0 border-top-0 bg-transparent" id={idx}>
                   <div className="text-center"><Link to={`/product/${item.id}`} className="btn btn-outline-dark mt-auto">View Details</Link></div>
               </div>
           </div>
