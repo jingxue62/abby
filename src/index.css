@@ -108,3 +108,42 @@ code {
   font-size: 1.2rem;
   text-align: right;
 }
+/* forms */
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 2rem;
+  margin-bottom: 10rem;
+  padding-top: 1rem;
+ } 
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 40rem;
+  padding: 2rem;
+  border: 0.1rem #c0c0c0 solid;
+  border-radius: 0.5rem;
+  list-style-type: none;
+  font-size: 1.2rem;
+
+}
+.form-container li {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+input {
+  padding: 0.5rem;
+  border: 0.1rem #c0c0c0 solid;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.form-group {
+  font-size: 1.2rem;
+  text-align: left;
+  padding: 0.5rem;
+}

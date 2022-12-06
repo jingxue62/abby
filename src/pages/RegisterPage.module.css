@@ -1,0 +1,70 @@
+.container {
+  height: 100%;
+  width: 100%;
+  background-color: #383e46;
+}
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-between;
+  position: absolute;
+  width: 590px;
+  height: 414px;
+  left: 50%;
+  top: 50%;
+  margin-top: -207px;
+  margin-left: -295px;
+  background: #e5e5e5;
+  padding: 10px 5px 20px 5px;
+  text-align: center;
+}
+
+.registerTitle {
+  display: flex;
+  align-content: center;
+  margin: 10px 0px 0px 0px;
+  color: #080808;
+  font-size: 15px;
+}
+
+.registerInput {
+  display: block;
+  align-content: center;
+  margin: 5px 15px;
+  padding: 2px 2px;
+  position: static;
+  width: 570px;
+  height: 40px;
+  font-size: 18px;
+}
+
+.registerButton {
+  border: none;
+  border-radius: 5px 5px 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  width: 570px;
+  height: 40px;
+  margin: 15px;
+  background-color: #00adb5;
+  color: #f5f5f5;
+}
+
+.registerAlert {
+  font-size: 15px;
+}
+
+.dangerAlert {
+  color: red;
+}
+
+.loginLink {
+  color: #00adb5;
+  font-size: 18px;
+  margin: 15px;
+
+}
