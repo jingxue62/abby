@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useLocation, useNavigate, Link } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import { addToCart, removeFromCart } from "../actions/CartActions";
 import { CART_ADD_ITEM } from "../constants/cartConstants";
 import {createBrowserHistory } from 'history';
-
 
 export default function Cart(props) {
     const history = createBrowserHistory();
     const [isLoading, setIsLoading] = useState(false);
     const cart = useSelector( state => state.cart);
     const {cartItems} = cart;
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo } = userSignin;
+
     // get the product id from URL
     const { productId } = useParams();
     // get the qty from the url
@@ -31,36 +33,40 @@ export default function Cart(props) {
     let navigate = useNavigate();
     const placeOrderHandler = async () => {
         setIsLoading(true);
-        try {
-            const config = {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({product_id: productId, buyer_id: 1, quantity: qty, desc: 'Order just placed.'})
+        if(userInfo){
+            console.log("userInfo:", userInfo)
+            try {
+                const config = {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({product_id: productId, buyer_id: userInfo.id, quantity: qty, desc: 'Order just placed.'})
+                }
+    
+                // Delete Products from cart after place order
+                if (CART_ADD_ITEM.length !== 0) {
+                    cartItems.map( (item) => {
+                        dispatch(removeFromCart(item.productId));
+                    })
+                }
+                const response = await fetch('/orders/placeOrder', config, {mode:'no-cors'});
+                console.log("place Order status:", response.status)
+                if (response.ok) {
+                    //
+                } else {
+                throw new Error('Data coud not be fetched!');
+                }
+            } catch (error) {
+                console.log(error);
+                throw new Error('Fatal Error encounted! Check console logs.');
             }
-
-            // Delete Products from cart after place order
-            if (CART_ADD_ITEM.length !== 0) {
-                cartItems.map( (item) => {
-                    dispatch(removeFromCart(item.productId));
-                })
-            }
-            dispatch(removeFromCart(productId));
-            const response = await fetch('/orders/placeOrder', config, {mode:'no-cors'});
-
-            if (response.ok) {
-                
-            } else {
-            throw new Error('Data coud not be fetched!');
-            }
-        } catch (error) {
-            console.log(error);
-            throw new Error('Fatal Error encounted! Check console logs.');
-        }
-        setIsLoading(false);
-        navigate('/orders/user/1');
+            setIsLoading(false);
+            navigate('/orders/user/' + userInfo.id);
+        } else {
+            navigate('/signin');
+        } 
     };
     if (isLoading) { return <div>Loading...</div>; }
     return (
@@ -73,7 +79,7 @@ export default function Cart(props) {
                             <h5> <strong>Shopping Cart</strong></h5>
                             <div> <h5><strong>Price</strong></h5> </div>
                         </li>
-                        {   CART_ADD_ITEM.length === 0 ? <div> Cart is empty </div>: cartItems.map( (item,index) => 
+                        {   CART_ADD_ITEM.length === 0 ? (<div> Cart is empty </div>): cartItems.map( (item,index) => 
                             <li key={index}>
                                 <div className="cart-image">
                                     <img src={item.image} alt='product'></img>

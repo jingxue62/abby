@@ -1,53 +1,59 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from "react-router-dom"
-import { getOrders } from '../actions/Orders'
+import { getOrders } from '../actions/OrderActions'
+import { useSelector } from 'react-redux';
 
-export default function GetOrders() {
+export default function Order() {
     const [getItems, initItem] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { userId } = useParams();
-
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo } = userSignin;
 
     useEffect(() => {
          getOrders(userId)
            .then((res) => {
+            //  console.log("Order data:",res.data)
              initItem(res.data);
            })
            .catch((e) => {
-             console.log(e.message)
+            //  console.log(e.message)
            })
        }, []);
 
      let navigate = useNavigate();
      const handleCancelOrder = async (itemID) => {
-       // console.log(itemID);
-       setIsLoading(true);
-       try {
-           const config = {
-               method: 'POST',
-               headers: {
-                   Accept: 'application/json',
-                   'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({id: itemID})
-           };
+        console.log("deleting an order:",itemID);
+        setIsLoading(true);
+        try {
+            const config = {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({id: itemID})
+            };
 
-           const response = await fetch('/orders/deleteOrder', config, {mode:'no-cors'});
-           if (response.ok) {
-             // console.log(response.json());
-           } else {
-             throw new Error('Data coud not be fetched!');
-           }
-         } catch (error) {
-           console.log(error);
-           throw new Error('Fatal Error encounted! Check console logs.');
-       }
-       setIsLoading(false);
-       window.location.reload();
+            const response = await fetch('/orders/deleteOrder', config, {mode:'no-cors'});
+
+            if (response.ok) {
+              console.log(response.json());
+            } else {
+              throw new Error('Data coud not be fetched!');
+            }
+          } catch (error) {
+            console.log(error);
+            throw new Error('Fatal Error encounted! Check console logs.');
+        }
+        setIsLoading(false);
+        window.location.reload();
      };
 
+    if (isLoading) { return <div>Loading...</div>; }
     return (
-        // <div className="App">
+      <div className="App">
+        { userInfo? (
           <body className="bg-dark py-5">
               <div className="container">
                   <div className="row">
@@ -68,7 +74,7 @@ export default function GetOrders() {
                         <th scope="col">Price</th>
                         <th scope="col">Qty</th>
                         <th scope="col">Total</th>
-                        <th scope="col">Buyer</th>
+                        <th scope="col">Seller</th>
                         <th scope="col">Placed At</th>
                         <th scope="col">Actions</th>
                       </tr>
@@ -94,7 +100,10 @@ export default function GetOrders() {
                     })}
                   </tbody>
               </table>
-          </body>
-      // </div>
+          </body> 
+          ) : 
+          <Link to="/signin">Sign In</Link>
+          }
+    </div>
   )
 }

@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/UserActions';
 
-import Form, { form }from "react-validation/build/form";
-import Input from "react-validation/build/input";
+// import Form, { form }from "react-validation/build/form";
+// import Input from "react-validation/build/input";
 import { isEmail } from "validator";
 import {createBrowserHistory } from 'history';
 
@@ -40,7 +40,7 @@ function Signin (props) {
     const dispatch = useDispatch();
     const history = createBrowserHistory();
     const redirect = history.location.search? history.location.search.split("=")[1]:"/";  
-    console.log("userInfo:", userInfo)
+   
     let navigate = useNavigate();
     useEffect(() => {
         if(userInfo){

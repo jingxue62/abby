@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { ImSearch } from "react-icons/im";
 import { BiSort } from "react-icons/bi";
 import { MdViewColumn } from "react-icons/md";
 
 function About() {
+  let navigate = useNavigate();
   return (
     <div className="App">
       <header className="py-1">
@@ -25,7 +26,9 @@ function About() {
             </div>
             <div className="row">
                   <div className="col px-4 px-lg-5 my-1">
-                    <button className= "button"> GET STARTED</button>
+                    <button className= "button" onClick={()=>{navigate("/register")}}> 
+                        GET STARTED
+                    </button>
                   </div>
             </div>
             <div className="row">

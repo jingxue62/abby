@@ -5,17 +5,27 @@ import About from "./pages/About";
 import Search from "./pages/Search";
 import AllProducts from './pages/AllProducts';
 import Product from './pages/ProdDetails';
-import Order from './pages/Orders';
+import Order from './pages/Order';
 import Cart from './pages/Cart';
-import Register from './pages/Register-bak';
+import Register from './pages/Register';
 import Signin from './pages/Signin';
+import Kitchen from './pages/Kitchen';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
-import {createBrowserHistory } from 'history';
-
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { createBrowserHistory } from 'history';
+import { logout } from './actions/UserActions';
 
 function App() {
   const history = createBrowserHistory();
+  const userSignin = useSelector(state => state.userSignin);
+  const { userInfo } = userSignin;
+  const dispatch = useDispatch();
+  const logoutHandler = () => {
+    dispatch(logout());
+    history.push("/");
+  }
+
   return (
     <BrowserRouter history={history}>
       <div className="App">
@@ -39,18 +49,35 @@ function App() {
                                 </li>
                                 <li><hr className="dropdown-divider" /></li>
                                 <li>
-                                    <Link to="/orders/user/1" className="dropdown-item">My Order</Link>
+                                  {userInfo? 
+                                    <Link to={`/orders/user/${userInfo.id}`} className="dropdown-item">My Order</Link>
+                                    :
+                                    <Link to='/signin'></Link>
+                                  }
                                 </li>
-                                <li><a className="dropdown-item" href="#!">My Kitchen</a></li>
+                                <li>
+                                  {userInfo? 
+                                    <Link to={`/kitchens/user/${userInfo.id}`} className="dropdown-item">My Kitchen</Link>
+                                    :
+                                    <Link to='/signin'></Link>
+                                  }
+                                </li>
                             </ul>
                         </li>
                     </ul>
                     <form className="d-flex">
-                        <button className="btn btn-outline-dark" type="submit">
-                            <i className="person-circle me-1"></i>
-                            Jing Xue
-                            <span className="badge bg-dark text-white ms-1 rounded-pill">Logout</span>
-                        </button>
+                      <div className="header-links">
+                        <Link to="/cart">Cart</Link>
+                        { // if userInfo exists, redirect to user profile. otherwise, to sign in.
+                          userInfo ? 
+                          <Link to={'/'}>{userInfo.username}</Link> 
+                          :
+                          <Link to="/signin">Sign In</Link>
+                        }
+                        { userInfo && 
+                        <a href="/signin" onClick={logoutHandler}>Log Out</a>
+                        }     
+                      </div>
                     </form>
                 </div>
             </div>
@@ -67,6 +94,7 @@ function App() {
           <Route path="/cart/:productId?" element={<Cart />} />
           <Route path="/cart/:productId" element={<Cart />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/kitchens/user/:userId" element={<Kitchen />} />
         </Routes>
       <footer className="py-5 bg-dark">
           <div className="container"><h5 className="m-0 text-center text-white"><strong>Team Jing Xue, Jing Shu 2022</strong></h5></div>

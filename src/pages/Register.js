@@ -1,103 +1,148 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../actions/UserActions';
 
-import Form from "react-validation/build/form";
+import Form, { form } from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { isEmail } from "validator";
 import {createBrowserHistory } from 'history';
 
-import styles from "./RegisterPage.module.css";
-
-// const RequiredField = (value) => {
-//   if (value) return null;
-//   return <div>This field is required!</div>;
-// };
-
-// const ValidateEmail = (email) => {
-//   if (isEmail(email)) return null;
-//   return <div>This is not a valid email</div>;
-// };
-
-// const ValidatePassword = (password) => {
-//   if (password.length >= 6 && password.length <= 40) return null;
-//   return <div>The password must be between 6 and 40 characters.</div>;
-// };
+// input validations 
+const required = (value) => {
+    if (!value) {
+      return (
+        <div className="alert alert-light" role="alert">
+          This field is required!
+        </div>
+      );
+    }
+  };
+  
+  const validEmail = (value) => {
+    if (!isEmail(value)) {
+      return (
+        <div className="alert alert-light" role="alert">
+          This is not a valid email.
+        </div>
+      );
+    }
+  };
+  
+  const vusername = (value) => {
+    if (value.length < 6 || value.length > 20) {
+      return (
+        <div className="alert alert-light" role="alert">
+          The username must be between 6 and 20 characters.
+        </div>
+      );
+    }
+  };
+  
+  const vpassword = (value) => {
+    if (value.length < 6 || value.length > 40) {
+      return (
+        <div className="alert alert-light" role="alert">
+          The password must be between 6 and 40 characters.
+        </div>
+      );
+    }
+  };
   
 function Register (props) {
-    const registerForm = useRef();
-    const navigate = useNavigate();
+
     // initial state
-    const [name, setName] = useState("");
+    const [username, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+    const [successful, setSuccessful] = useState(false);
+
+    const userRegister = useSelector(state=>state.register);
+    const { loading, userInfo, error } = userRegister;
+    // const { message } = useSelector(state => state.message);
+    const history = createBrowserHistory();
+    const dispatch = useDispatch();
+    const redirect = history.location.search? history.location.search.split("=")[1]:"/";  
+
+    useEffect(() => {
+        if(userInfo){
+            history.push(redirect);
+        }
+        return () => {
+          //
+        };
+    },[userInfo])
     
-    return (
-        <div className={styles.container}>
-            <div className={styles.register}>
-                <section>
-                <div className={styles.registerTitle}>
-                    <h4>Create an Account</h4>
+    let navigate = useNavigate();
+    if (successful) {
+        console.log("redirecting to login");
+        navigate("/signin");
+      }
+
+    const sumbitHandler = (e) => {
+        e.preventDefault();
+        setSuccessful(false);
+        // form.current.validateAll();
+
+        dispatch(register(username,email,password))
+        .then(() => {
+            setSuccessful(true);
+        })
+        .catch(() => {
+            setSuccessful(false);
+        });
+    };
+
+    return <div className="form">
+        <form className='form-container' onSubmit={sumbitHandler}>
+            <div>
+                <h4><strong>Register</strong></h4>
+                <div className="form-group">
+                    <label htmlFor="name">UserName</label>
+                    <input type='text' name='username' id='username' placeholder = "username"
+                        value={username} 
+                        validations={[required, vusername]}
+                        onChange={(e) => setName(e.target.value)}>
+                    </input>
                 </div>
-                </section>
-                <section>
-                <form>
-                    <div className='field'>
-                        <input
-                            className={styles.registerInput}
-                            name="email"
-                            value={email}
-                            placeholder="Email address"
-                            onChange={(event) => setEmail(event.target.value)}
-                            // validations={[RequiredField, ValidateEmail]}
-                        />
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input type='email' name='email' id='email' placeholder = "email"
+                        value={email} 
+                        validations={[required, validEmail]}
+                        onChange={(e) => setEmail(e.target.value)}>
+                    </input>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input type='password' name='password' id='password' placeholder = "password"
+                        value={password}
+                        validations={[required, vpassword]}
+                        onChange={(e) => setPassword(e.target.value)}>
+                    </input>
+                </div>
+                <div className="form-group2">
+                    <button type="submit" className='button primary full-width'>Sign Up</button>
+                </div>
+                <div className="form-group2">
+                    {/* Already have an account? <Link to="/signin">Sign in</Link> */}
+                    Already have an account? <Link to={redirect === '/' ? "signin" : "redirect?redirect"+redirect}>
+                      Sign in
+                    </Link>
+                </div>
+                {/* {message && (
+                    <div className="form-group">
+                        <div className={ successful ? "alert alert-success" : "alert alert-danger" } role="alert">
+                            {message}
+                        </div>
                     </div>
-                    <div className='field'>
-                        <input
-                            type="password"
-                            className={styles.registerInput}
-                            name="password"
-                            value={password}
-                            placeholder="Password"
-                            onChange={(event) => setPassword(event.target.value)}
-                            // validations={[RequiredField, ValidatePassword]}
-                        />
+                )} */}
+                    <div className="form-group">
+                        {loading && <div>loading...</div>}
                     </div>
-                    <div className='field'>
-                        <input
-                            type="password"
-                            className={styles.registerInput}
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            placeholder="Confirm Password"
-                            onChange={(event) => {
-                            const value = event.target.value;
-                            setConfirmPassword(value);
-                            if (password !== value) {
-                                setError("Confirm Password should match with password");
-                            } else {
-                                setError("");
-                            }
-                            }}
-                            // validations={[RequiredField, ValidatePassword]}
-                        />
-                        {error}
-                    </div>
-                    <button className={styles.registerButton} disabled={!!error}>
-                        Register
-                    </button>
-                    <div className={styles.loginLink}>
-                        <Link to="/login">Back to login</Link>
-                    </div> 
-                </form>
-                </section>
             </div>
+        </form>
         </div>
-    )
-};
+}
 
 export default Register;

@@ -1,6 +1,7 @@
 // get order by userId
 const getOrders = async (userId) => {
     try {
+        console.log("getting orders of userId:", userId);
         const response = await fetch('/orders/user/' + userId, {mode:'no-cors'});
         if (response.ok) {
           return response.json();
