@@ -126,7 +126,7 @@ function Register (props) {
                 </div>
                 <div className="form-group2">
                     {/* Already have an account? <Link to="/signin">Sign in</Link> */}
-                    Already have an account? <Link to={redirect === '/' ? "signin" : "redirect?redirect"+redirect}>
+                    Already have an account? <Link to="/signin">
                       Sign in
                     </Link>
                 </div>
